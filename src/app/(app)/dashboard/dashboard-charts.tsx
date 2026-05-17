@@ -67,7 +67,8 @@ export function DashboardCharts() {
             </div>
           </div>
 
-          <ResponsiveContainer width="100%" height="75%">
+          <div className="w-full mt-4">
+            <ResponsiveContainer width="100%" height={240} minWidth={0}>
             <AreaChart data={chartData} margin={{ top: 0, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorMatches" x1="0" y1="0" x2="0" y2="1">
@@ -86,7 +87,8 @@ export function DashboardCharts() {
               <Area type="monotone" dataKey="applied" name="Applied" stroke="#06b6d4" strokeWidth={2} fillOpacity={1} fill="url(#colorApplied)" />
               <Area type="monotone" dataKey="matches" name="AI Matched" stroke="#6366f1" strokeWidth={3} fillOpacity={1} fill="url(#colorMatches)" />
             </AreaChart>
-          </ResponsiveContainer>
+            </ResponsiveContainer>
+          </div>
 
           <div className="flex items-center gap-6 mt-2">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -116,7 +118,8 @@ export function DashboardCharts() {
             <p className="text-xs text-muted-foreground mt-0.5">Top skills across all candidates</p>
           </div>
 
-          <ResponsiveContainer width="100%" height="65%">
+          <div className="w-full mt-4">
+            <ResponsiveContainer width="100%" height={220} minWidth={0}>
             <PieChart>
               <Pie
                 data={skillData}
@@ -134,7 +137,8 @@ export function DashboardCharts() {
               </Pie>
               <Tooltip content={<CustomTooltip />} />
             </PieChart>
-          </ResponsiveContainer>
+            </ResponsiveContainer>
+          </div>
 
           <div className="mt-2 space-y-2">
             {skillData.slice(0,3).map((skill, i) => (

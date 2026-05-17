@@ -9,13 +9,15 @@ import { Input } from "@/components/ui/input";
 
 export default async function JobsPage() {
   let jobs: any[] = [];
-  
+  let dbError = null;
+
   try {
     jobs = await db.jobDescription.findMany({
       orderBy: { createdAt: "desc" },
     });
-  } catch (error) {
-    console.warn("DB error, using mock data");
+  } catch (error: any) {
+    console.warn("DB error, using mock data", error);
+    dbError = error.message || "Failed to connect to database";
     jobs = [
       { id: "mock-1", title: "Senior Frontend Engineer", experienceRequired: "5+ years", createdAt: new Date(), status: "Active" },
       { id: "mock-2", title: "Product Manager", experienceRequired: "3+ years", createdAt: new Date(), status: "Draft" },
@@ -35,6 +37,13 @@ export default async function JobsPage() {
           Create Job
         </Link>
       </div>
+
+      {dbError && (
+        <div className="bg-destructive/10 border border-destructive text-destructive px-6 py-4 rounded-2xl flex items-center gap-3">
+          <div className="font-bold">Database Error:</div>
+          <div className="text-sm">{dbError}</div>
+        </div>
+      )}
 
       <div className="flex gap-4 items-center">
         <div className="relative flex-1">

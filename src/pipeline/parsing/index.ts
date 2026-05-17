@@ -29,8 +29,13 @@ const CandidateProfileSchema = z.object({
 
 export async function parseJobDescriptionStep(rawText: string) {
   if (!process.env.OPENAI_API_KEY) {
-    logger.warn("No OPENAI_API_KEY provided for parseJobDescriptionStep.");
-    throw new Error("Missing AI configuration");
+    logger.warn("No OPENAI_API_KEY provided. Using mock data for Job Description.");
+    return {
+      title: "Senior Software Engineer (Mock)",
+      requiredSkills: ["React", "Node.js", "TypeScript"],
+      preferredSkills: ["AWS", "GraphQL"],
+      experienceRequired: "5+ years",
+    };
   }
 
   const openai = getAIClient();
@@ -48,8 +53,19 @@ export async function parseJobDescriptionStep(rawText: string) {
 
 export async function parseResumeStep(rawText: string) {
   if (!process.env.OPENAI_API_KEY) {
-    logger.warn("No OPENAI_API_KEY provided for parseResumeStep.");
-    throw new Error("Missing AI configuration");
+    logger.warn("No OPENAI_API_KEY provided. Using mock data for Candidate.");
+    return {
+      name: "Alex Developer",
+      email: "alex@example.com",
+      phone: "+1 (555) 012-3456",
+      skills: ["React", "TypeScript", "Node.js", "Python", "SQL"],
+      experience: [
+        { role: "Software Engineer", company: "Tech Solutions", duration: "2020-Present" }
+      ],
+      education: [
+        { degree: "B.S. Computer Science", institution: "State University", year: "2020" }
+      ]
+    };
   }
 
   const openai = getAIClient();

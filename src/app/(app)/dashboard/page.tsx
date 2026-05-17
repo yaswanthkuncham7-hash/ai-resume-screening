@@ -7,21 +7,32 @@ import { RecentJobs } from "./recent-jobs";
 import { DashboardStats } from "./dashboard-stats";
 
 export default async function DashboardPage() {
-  // Fetch real stats from our functional mock DB
-  const jobsCount = await db.jobDescription.count();
-  const candidatesCount = await db.candidateProfile.count();
-  const matchesCount = await db.matchResult.count() || (candidatesCount * 1.5).toFixed(0);
+  let jobsCount = 0;
+  let candidatesCount = 0;
+  let matchesCount: string | number = 0;
+  let recentJobsFromDb: any[] = [];
+  let dbError = null;
+
+  try {
+    // Fetch real stats from our DB
+    jobsCount = await db.jobDescription.count();
+    candidatesCount = await db.candidateProfile.count();
+    matchesCount = await db.matchResult.count() || (candidatesCount * 1.5).toFixed(0);
+
+    recentJobsFromDb = await db.jobDescription.findMany({
+      take: 3,
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (err: any) {
+    console.error("Database connection failed on dashboard:", err);
+    dbError = err.message || "Failed to connect to database";
+  }
 
   const stats = { 
     jobs: jobsCount, 
     candidates: candidatesCount, 
     matches: matchesCount 
   };
-
-  const recentJobsFromDb = await db.jobDescription.findMany({
-    take: 3,
-    orderBy: { createdAt: "desc" }
-  });
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto font-sans">
@@ -40,6 +51,13 @@ export default async function DashboardPage() {
           </Button>
         </Link>
       </div>
+
+      {dbError && (
+        <div className="bg-destructive/10 border border-destructive text-destructive px-6 py-4 rounded-2xl flex items-center gap-3">
+          <div className="font-bold">Database Error:</div>
+          <div className="text-sm">{dbError}</div>
+        </div>
+      )}
 
       {/* Stats Cards */}
       <DashboardStats stats={stats} />

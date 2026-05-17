@@ -11,13 +11,15 @@ import { DeactivateButton } from "./deactivate-button";
 
 export default async function EmployeesPage() {
   let employees: any[] = [];
-  
+  let dbError = null;
+
   try {
     employees = await (db as any).employee.findMany({
       orderBy: { createdAt: "desc" },
     });
-  } catch (error) {
-    console.warn("DB error, using mock data");
+  } catch (error: any) {
+    console.warn("DB error, using mock data", error);
+    dbError = error.message || "Failed to connect to database";
     employees = [
       { id: "e1", name: "Sarah Chen", role: "Senior Frontend Engineer", status: "Active" },
       { id: "e2", name: "Michael Ross", role: "Product Manager", status: "Active" },
