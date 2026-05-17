@@ -18,7 +18,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { logoutAction } from "@/app/actions";
+import { logoutAction } from "@/app/(auth)/auth-actions";
 
 const items = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },

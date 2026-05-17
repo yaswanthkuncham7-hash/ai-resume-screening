@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sparkles, ArrowRight, Command, Globe } from "lucide-react";
 import Link from "next/link";
-import { loginAction } from "@/app/actions";
+import { loginAction } from "@/app/(auth)/auth-actions";
 
 export default function LoginPage() {
   return (
