@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sparkles, ArrowRight, Command, Globe } from "lucide-react";
 import Link from "next/link";
+import { loginAction } from "@/app/actions";
 
 export default function LoginPage() {
   return (
@@ -38,12 +39,13 @@ export default function LoginPage() {
             <p className="text-sm text-muted-foreground">Sign in to your recruiter workspace</p>
           </div>
 
-          <div className="space-y-4">
+          <form action={loginAction} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground ml-1">Email Address</Label>
               <Input 
                 id="email" 
                 type="email" 
+                name="email"
                 placeholder="name@company.com" 
                 className="h-12 bg-background/50 border-border/50 focus:border-primary transition-all rounded-xl"
               />
@@ -56,16 +58,15 @@ export default function LoginPage() {
               <Input 
                 id="password" 
                 type="password" 
+                name="password"
                 className="h-12 bg-background/50 border-border/50 focus:border-primary transition-all rounded-xl"
               />
             </div>
-          </div>
 
-          <Link href="/dashboard">
-            <Button className="w-full h-12 text-md font-semibold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 rounded-xl mt-4 group">
+            <Button type="submit" className="w-full h-12 text-md font-semibold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 rounded-xl mt-4 group">
               Sign in <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </Link>
+          </form>
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -77,16 +78,20 @@ export default function LoginPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <Button variant="outline" className="h-12 rounded-xl bg-background/50 border-border/50 hover:bg-muted transition-all">
-              <Command className="mr-2 h-5 w-5" /> GitHub
-            </Button>
-            <Button variant="outline" className="h-12 rounded-xl bg-background/50 border-border/50 hover:bg-muted transition-all">
-              <Globe className="mr-2 h-5 w-5" /> Google
-            </Button>
+            <form action={loginAction}>
+              <Button type="submit" variant="outline" className="h-12 w-full rounded-xl bg-background/50 border-border/50 hover:bg-muted transition-all">
+                <Command className="mr-2 h-5 w-5" /> GitHub
+              </Button>
+            </form>
+            <form action={loginAction}>
+              <Button type="submit" variant="outline" className="h-12 w-full rounded-xl bg-background/50 border-border/50 hover:bg-muted transition-all">
+                <Globe className="mr-2 h-5 w-5" /> Google
+              </Button>
+            </form>
           </div>
 
           <p className="text-center text-sm text-muted-foreground pt-4">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="#" className="font-semibold text-primary hover:underline">Request early access</Link>
           </p>
         </div>

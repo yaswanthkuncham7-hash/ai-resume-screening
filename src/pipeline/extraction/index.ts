@@ -1,10 +1,11 @@
 import mammoth from "mammoth";
 import { logger } from "@/lib/logger";
-const pdf = require("pdf-parse");
-const pdfParse = typeof pdf === "function" ? pdf : (pdf.default || pdf);
 
 export async function parsePdf(buffer: Buffer): Promise<string> {
   try {
+    // Dynamic import for code splitting — pdf-parse (~2MB) only loaded when needed
+    const pdfModule: any = await import("pdf-parse");
+    const pdfParse = pdfModule.default || pdfModule;
     const data = await pdfParse(buffer);
     return data.text;
   } catch (error) {

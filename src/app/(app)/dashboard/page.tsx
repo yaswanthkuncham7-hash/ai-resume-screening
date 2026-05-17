@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-export const dynamic = "force-dynamic";
 import { Briefcase, Users, TrendingUp, Sparkles, Plus, BrainCircuit } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

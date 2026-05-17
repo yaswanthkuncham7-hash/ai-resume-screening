@@ -15,7 +15,6 @@ export async function saveJobDescription(parsedData: any, rawText: string) {
 }
 
 export async function getJobDescription(jobId: string) {
-  logger.info(`Fetching Job Description: ${jobId}`);
   return await db.jobDescription.findUnique({ where: { id: jobId } });
 }
 

@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { logoutAction } from "@/app/actions";
 
 const items = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -130,15 +131,15 @@ export function Sidebar() {
           )}
         </div>
 
-        <Link href="/login">
-          <div className={cn(
-            "flex items-center h-12 rounded-2xl text-rose-500 hover:bg-rose-500/10 transition-all px-3 cursor-pointer group overflow-hidden border border-transparent hover:border-rose-500/20",
+        <form action={logoutAction}>
+          <button type="submit" className={cn(
+            "flex items-center w-full h-12 rounded-2xl text-rose-500 hover:bg-rose-500/10 transition-all px-3 cursor-pointer group overflow-hidden border border-transparent hover:border-rose-500/20",
             collapsed ? "justify-center" : ""
           )}>
             <LogOut className="h-5 w-5 shrink-0 group-hover:-translate-x-1 transition-transform duration-300" />
             {!collapsed && <span className="ml-3 text-sm font-bold tracking-tight">Sign Out</span>}
-          </div>
-        </Link>
+          </button>
+        </form>
       </div>
 
       {/* Collapse Toggle */}

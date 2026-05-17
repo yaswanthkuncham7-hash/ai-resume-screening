@@ -7,6 +7,12 @@
   "functions": {
     "src/app/actions.ts": {
       "maxDuration": 60
+    },
+    "src/app/**/*.ts": {
+      "maxDuration": 30
+    },
+    "src/app/**/*.tsx": {
+      "maxDuration": 30
     }
   }
 }

@@ -1,16 +1,19 @@
+const isProd = process.env.NODE_ENV === "production";
+
 export const logger = {
-  info: (message: string, meta?: any) => {
-    console.log(`[INFO] ${message}`, meta ? meta : "");
+  info: (message: string, meta?: unknown) => {
+    console.log(`[INFO] ${message}`, meta ?? "");
   },
-  warn: (message: string, meta?: any) => {
-    console.warn(`[WARN] ${message}`, meta ? meta : "");
+  warn: (message: string, meta?: unknown) => {
+    console.warn(`[WARN] ${message}`, meta ?? "");
   },
-  error: (message: string, error?: any) => {
-    console.error(`[ERROR] ${message}`, error ? error : "");
+  error: (message: string, error?: unknown) => {
+    console.error(`[ERROR] ${message}`, error ?? "");
   },
-  debug: (message: string, meta?: any) => {
-    if (process.env.NODE_ENV !== "production") {
-      console.log(`[DEBUG] ${message}`, meta ? meta : "");
-    }
-  },
+  // Complete no-op in production — zero overhead
+  debug: isProd
+    ? (_message: string, _meta?: unknown) => {}
+    : (message: string, meta?: unknown) => {
+        console.log(`[DEBUG] ${message}`, meta ?? "");
+      },
 };

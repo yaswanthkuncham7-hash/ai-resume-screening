@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { getAIClient } from "@/services/ai";
-import { env } from "@/lib/env";
 import { logger } from "@/lib/logger";
 
 const MatchResultSchema = z.object({
@@ -9,8 +8,8 @@ const MatchResultSchema = z.object({
   rationale: z.string().describe("Explanation for the score, max 2-3 sentences"),
 });
 
-export async function evaluateCandidateStep(candidate: any, jobDescription: any) {
-  if (!env.OPENAI_API_KEY) {
+export async function evaluateCandidateStep(candidate: unknown, jobDescription: unknown) {
+  if (!process.env.OPENAI_API_KEY) {
     logger.warn("No OPENAI_API_KEY provided for evaluateCandidateStep.");
     throw new Error("Missing AI configuration");
   }

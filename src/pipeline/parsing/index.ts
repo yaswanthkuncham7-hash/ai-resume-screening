@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { getAIClient } from "@/services/ai";
-import { env } from "@/lib/env";
 import { logger } from "@/lib/logger";
 
 const JobDescriptionSchema = z.object({
@@ -29,7 +28,7 @@ const CandidateProfileSchema = z.object({
 });
 
 export async function parseJobDescriptionStep(rawText: string) {
-  if (!env.OPENAI_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     logger.warn("No OPENAI_API_KEY provided for parseJobDescriptionStep.");
     throw new Error("Missing AI configuration");
   }
@@ -48,7 +47,7 @@ export async function parseJobDescriptionStep(rawText: string) {
 }
 
 export async function parseResumeStep(rawText: string) {
-  if (!env.OPENAI_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     logger.warn("No OPENAI_API_KEY provided for parseResumeStep.");
     throw new Error("Missing AI configuration");
   }

@@ -18,6 +18,9 @@ model Employee {
   role      String
   status    String   @default("Active")
   createdAt DateTime @default(now())
+
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
 }
 
 model JobDescription {
@@ -30,6 +33,8 @@ model JobDescription {
   createdAt          DateTime @default(now())
 
   matches            MatchResult[]
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model CandidateProfile {
@@ -45,6 +50,8 @@ model CandidateProfile {
   createdAt    DateTime @default(now())
 
   matches      MatchResult[]
+
+  @@index([createdAt(sort: Desc)])
 }
 
 model MatchResult {
@@ -60,4 +67,7 @@ model MatchResult {
   candidate        CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
 
   @@unique([jobId, candidateId])
+  @@index([jobId])
+  @@index([candidateId])
+  @@index([score(sort: Desc)])
 }

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { logger } from "@/lib/logger";
+import { createSession, destroySession } from "@/lib/auth";
 import { extractTextFromFile } from "@/pipeline/extraction";
 import { parseJobDescriptionStep, parseResumeStep } from "@/pipeline/parsing";
 import { evaluateCandidateStep } from "@/pipeline/scoring";
@@ -17,6 +18,20 @@ import {
   getEmployee,
   deactivateEmployeeRecord
 } from "@/pipeline/storage";
+
+// ─── Auth Actions ─────────────────────────────────────────────
+
+export async function loginAction() {
+  await createSession();
+  redirect("/dashboard");
+}
+
+export async function logoutAction() {
+  await destroySession();
+  redirect("/login");
+}
+
+// ─── Job Description Actions ──────────────────────────────────
 
 export async function createJobDescription(formData: FormData) {
   const text = formData.get("text") as string;
@@ -41,6 +56,8 @@ export async function createJobDescription(formData: FormData) {
     throw err;
   }
 }
+
+// ─── Resume Upload ────────────────────────────────────────────
 
 export async function uploadResume(jobId: string, formData: FormData) {
   const file = formData.get("file") as File;
@@ -96,6 +113,8 @@ export async function uploadResume(jobId: string, formData: FormData) {
   }
 }
 
+// ─── Employee Actions ─────────────────────────────────────────
+
 export async function deactivateEmployee(employeeId: string) {
   try {
     const employee = await getEmployee(employeeId);
@@ -120,6 +139,8 @@ export async function deactivateEmployee(employeeId: string) {
     return { success: false };
   }
 }
+
+// ─── Candidate Actions ────────────────────────────────────────
 
 export async function hireCandidate(candidateId: string, jobId: string) {
   try {
