@@ -18,11 +18,7 @@ export default function NewJobPage() {
     const formData = new FormData(e.currentTarget);
     
     try {
-      const res = await createJobDescription(formData);
-      if (res?.mockId) {
-        // Handle mock fallback if DB is not connected
-        router.push(`/jobs/${res.mockId}`);
-      }
+      await createJobDescription(formData);
       // If success, the action redirects automatically.
     } catch (error) {
       console.error(error);

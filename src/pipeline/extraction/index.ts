@@ -1,14 +1,15 @@
+import mammoth from "mammoth";
+import { logger } from "@/lib/logger";
 const pdf = require("pdf-parse");
 const pdfParse = typeof pdf === "function" ? pdf : (pdf.default || pdf);
-import mammoth from "mammoth";
 
 export async function parsePdf(buffer: Buffer): Promise<string> {
   try {
     const data = await pdfParse(buffer);
     return data.text;
   } catch (error) {
-    console.warn("Error parsing PDF, using fallback text:", error);
-    return "This is a fallback parsed text for the demo. The PDF parser encountered an environment-specific issue, but the AI matching engine will still demonstrate its capability using this mock data.";
+    logger.warn("Error parsing PDF, using fallback text:", error);
+    throw new Error("Failed to extract text from PDF");
   }
 }
 
@@ -17,8 +18,8 @@ export async function parseDocx(buffer: Buffer): Promise<string> {
     const result = await mammoth.extractRawText({ buffer });
     return result.value;
   } catch (error) {
-    console.warn("Error parsing DOCX, using fallback text:", error);
-    return "This is a fallback parsed text for the demo. The DOCX parser encountered an issue, but we are continuing with mock data to show the AI matching flow.";
+    logger.warn("Error parsing DOCX, using fallback text:", error);
+    throw new Error("Failed to extract text from DOCX");
   }
 }
 
