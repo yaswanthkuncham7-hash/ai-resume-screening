@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
 
   // Externalize heavy native packages from serverless bundles
   // Dramatically reduces cold start time on Vercel
-  serverExternalPackages: ["pdf-parse", "mammoth"],
+  serverExternalPackages: ["pdf-parse", "pdf-parse-new", "mammoth"],
 
   // Remove X-Powered-By header
   poweredByHeader: false,

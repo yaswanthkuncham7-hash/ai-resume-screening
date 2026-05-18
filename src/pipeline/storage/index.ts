@@ -26,8 +26,8 @@ export async function saveCandidate(parsedCandidate: any, rawText: string, manua
       email: parsedCandidate.email,
       phone: parsedCandidate.phone,
       skills: parsedCandidate.skills ?? [],
-      experience: parsedCandidate.experience as any,
-      education: parsedCandidate.education as any,
+      experience: parsedCandidate.experience ?? [],
+      education: parsedCandidate.education ?? [],
       parsedText: rawText,
     },
   });
